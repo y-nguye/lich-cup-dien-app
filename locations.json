@@ -1,0 +1,28 @@
+{
+    "data": [
+        {
+            "label": "Huyện Lấp Vò",
+            "value": "lap-vo"
+        },
+        {
+            "label": "Thành phố Cao Lãnh",
+            "value": "cao-lanh"
+        },
+        {
+            "label": "Thành phố Sa Đéc",
+            "value": "thanh-pho-sa-dec"
+        },
+        {
+            "label": "Huyện Châu Thành",
+            "value": "chau-thanh"
+        },
+        {
+            "label": "Huyện Lai Vung",
+            "value": "lai-vung"
+        },
+        {
+            "label": "Huyện Hồng Ngự",
+            "value": "hong-ngu"
+        }
+    ]
+}
