@@ -1,8 +1,8 @@
 import { useEffect, useState, useContext } from 'react';
 import { View, Text } from 'react-native';
 import { BlurView } from 'expo-blur';
-import LocationContext from '../LocationContext';
 
+import LocationContext from '../LocationContext';
 import LoadingComponent from './LoadingComponent';
 
 export default function ListComponent() {
@@ -37,25 +37,27 @@ export default function ListComponent() {
 
     return (
         <View>
-            {data.length
-                ? data.map((item, index) => (
-                      <View
-                          key={index}
-                          className="border-solid border-2 border-sky-500 rounded-lg mt-2 ml-2 mr-2 p-2 "
-                      >
-                          <BlurView intensity={10}>
-                              <Text className="text-lg">{item['Ngày:']}</Text>
-                              <Text>{item['Thời gian:']}</Text>
-                              <Text>
-                                  <Text>Khu vực:</Text> {item['Khu vực:']}
-                              </Text>
-                              <Text>
-                                  <Text>Điện lực:</Text> {item['Điện lực:']}
-                              </Text>
-                          </BlurView>
-                      </View>
-                  ))
-                : null}
+            {data.length ? (
+                data.map((item, index) => (
+                    <View
+                        key={index}
+                        className="border-solid border-2 border-sky-500 rounded-lg mt-2 ml-2 mr-2 p-2 "
+                    >
+                        <BlurView intensity={10}>
+                            <Text className="text-lg">{item['Ngày:']}</Text>
+                            <Text>{item['Thời gian:']}</Text>
+                            <Text>
+                                <Text>Khu vực:</Text> {item['Khu vực:']}
+                            </Text>
+                            <Text>
+                                <Text>Điện lực:</Text> {item['Điện lực:']}
+                            </Text>
+                        </BlurView>
+                    </View>
+                ))
+            ) : (
+                <Text className="mt-16 mx-auto">Không có lịch cúp điện</Text>
+            )}
         </View>
     );
 }

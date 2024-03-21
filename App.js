@@ -13,8 +13,21 @@ import ButtonIcon from './components/ButtonIcon';
 const Stack = createNativeStackNavigator();
 
 function App() {
+    const defaultLocation = 'lap-vo';
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const clearAllStorage = async () => {
+        try {
+            await AsyncStorage.clear();
+            console.log('Tất cả dữ liệu đã được xoá từ AsyncStorage');
+        } catch (error) {
+            console.error('Lỗi khi xoá tất cả dữ liệu từ AsyncStorage:', error);
+        }
+    };
+
+    // clearAllStorage();
 
     useEffect(() => {
         const getLocationFromStorage = async () => {
@@ -23,8 +36,14 @@ function App() {
                     'storedLocation'
                 );
 
-                if (storedLocation) {
-                    setLocation(`'${storedLocation}'`);
+                console.log(location);
+
+                if (storedLocation && typeof storedLocation === 'string') {
+                    setLocation(JSON.parse(storedLocation));
+                    setSelectedItem(JSON.parse(storedLocation));
+                } else {
+                    setLocation(defaultLocation);
+                    setSelectedItem(defaultLocation);
                 }
             } catch (error) {
                 console.error('Error reading location from storage:', error);
@@ -36,7 +55,15 @@ function App() {
 
     return (
         <LocationContext.Provider
-            value={{ location, setLocation, loading, setLoading }}
+            value={{
+                location,
+                setLocation,
+                selectedItem,
+                setSelectedItem,
+                loading,
+                setLoading,
+                defaultLocation,
+            }}
         >
             <NavigationContainer>
                 <Stack.Navigator>
@@ -48,7 +75,7 @@ function App() {
                             headerTransparent: true,
                             headerBlurEffect: 'light',
                             headerTitleStyle: {
-                                fontSize: '20px',
+                                fontSize: 20, // Sử dụng pixel hoặc rem thay vì px
                             },
                             headerRight: () => (
                                 <ButtonIcon
@@ -67,7 +94,7 @@ function App() {
                             headerTransparent: true,
                             headerBlurEffect: 'light',
                             headerTitleStyle: {
-                                fontSize: '20px',
+                                fontSize: 20, // Sử dụng pixel hoặc rem thay vì px
                             },
                             headerBackTitle: 'Quay lại',
                         }}

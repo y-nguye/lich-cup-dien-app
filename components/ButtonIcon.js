@@ -1,8 +1,5 @@
-import { View, Text } from 'react-native';
-import {
-    GestureHandlerRootView,
-    TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { EvilIcons } from '@expo/vector-icons';
 

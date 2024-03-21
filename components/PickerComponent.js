@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LocationContext from '../LocationContext';
-
-import {
-    GestureHandlerRootView,
-    TouchableOpacity,
-} from 'react-native-gesture-handler';
-
 import { Feather } from '@expo/vector-icons';
+
 function PickerComponent() {
-    const { setLocation, setLoading } = useContext(LocationContext);
+    const {
+        setLocation,
+        setLoading,
+        selectedItem,
+        setSelectedItem,
+        defaultLocation,
+    } = useContext(LocationContext);
     const [data, setData] = useState([]);
     const [storedLocation, setStoredLocation] = useState(null);
 
@@ -18,15 +19,19 @@ function PickerComponent() {
         const fetchData = async () => {
             try {
                 const jsonData = require('../locations.json');
-                setData(jsonData.data);
+                setData(jsonData.dongthap);
 
-                // Lấy dữ liệu đã lưu từ AsyncStorage
                 const storedStoredLocation = await AsyncStorage.getItem(
                     'storedLocation'
                 );
                 if (storedStoredLocation) {
                     setStoredLocation(JSON.parse(storedStoredLocation));
+                    setSelectedItem(JSON.parse(storedStoredLocation));
+                } else {
+                    setStoredLocation(defaultLocation);
+                    setSelectedItem(defaultLocation);
                 }
+                console.log(storedStoredLocation);
             } catch (error) {
                 console.error('Error reading JSON file:', error);
             }
@@ -36,7 +41,6 @@ function PickerComponent() {
     }, []);
 
     useEffect(() => {
-        // Lưu trạng thái mới của storedLocation vào AsyncStorage khi storedLocation thay đổi
         AsyncStorage.setItem('storedLocation', JSON.stringify(storedLocation));
     }, [storedLocation]);
 
@@ -45,39 +49,32 @@ function PickerComponent() {
             setStoredLocation(item.value); // Chọn mục mới
             setLocation(item.value);
             setLoading(true);
+            setSelectedItem(item.value); // Cập nhật mục đã chọn
         } else {
             setLocation(item.value);
+            setSelectedItem(item.value); // Cập nhật mục đã chọn
         }
     };
 
     return (
         <View className="m-5 rounded-xl overflow-hidden bg-white">
-            <GestureHandlerRootView>
-                {data.map((item, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        onPress={() => toggleItem(item)}
-                        style={[
-                            styles.itemContainer,
-                            storedLocation === item.value &&
-                                styles.storedLocation,
-                        ]}
-                    >
-                        <View className="flex flex-row justify-between items-center">
-                            <Text style={styles.itemText}>{item.label}</Text>
-                            <Text
-                                style={[
-                                    storedLocation === item.value
-                                        ? styles.tickVisible
-                                        : styles.tickHidden,
-                                ]}
-                            >
-                                <Feather name="check" size={24} color="black" />
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                ))}
-            </GestureHandlerRootView>
+            {data.map((item, index) => (
+                <TouchableOpacity
+                    key={index}
+                    onPress={() => toggleItem(item)}
+                    style={[
+                        styles.itemContainer,
+                        storedLocation === item.value && styles.storedLocation,
+                    ]}
+                >
+                    <View className="flex flex-row justify-between items-center">
+                        <Text style={styles.itemText}>{item.label}</Text>
+                        {selectedItem === item.value && (
+                            <Feather name="check" size={24} color="black" />
+                        )}
+                    </View>
+                </TouchableOpacity>
+            ))}
         </View>
     );
 }
@@ -90,17 +87,12 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 16,
+        lineHeight: 24,
     },
     storedLocation: {
         backgroundColor: 'silver',
         borderBottomWidth: 1,
-    },
-
-    tickHidden: {
-        display: 'none',
-    },
-    tickVisible: {
-        display: 'block',
+        borderBottomColor: '#ccc',
     },
 });
 

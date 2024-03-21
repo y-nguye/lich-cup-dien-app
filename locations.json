@@ -1,11 +1,15 @@
 {
-    "data": [
+    "dongthap": [
         {
             "label": "Huyện Lấp Vò",
             "value": "lap-vo"
         },
         {
             "label": "Thành phố Cao Lãnh",
+            "value": "thanh-pho-cao-lanh"
+        },
+        {
+            "label": "Huyện Cao Lãnh",
             "value": "cao-lanh"
         },
         {
@@ -13,16 +17,36 @@
             "value": "thanh-pho-sa-dec"
         },
         {
-            "label": "Huyện Châu Thành",
-            "value": "chau-thanh"
-        },
-        {
             "label": "Huyện Lai Vung",
             "value": "lai-vung"
         },
         {
+            "label": "Thành phố Hồng Ngự",
+            "value": "thanh-pho-hong-ngu"
+        },
+        {
             "label": "Huyện Hồng Ngự",
             "value": "hong-ngu"
+        },
+        {
+            "label": "Huyện Tân Hồng",
+            "value": "tan-hong"
+        },
+        {
+            "label": "Huyện Tháp Mười",
+            "value": "thap-muoi"
+        },
+        {
+            "label": "Huyện Thanh Bình",
+            "value": "thanh-binh"
+        },
+        {
+            "label": "Huyện Tam Nông",
+            "value": "tam-nong"
+        },
+        {
+            "label": "Huyện Châu Thành",
+            "value": "chau-thanh"
         }
     ]
 }
